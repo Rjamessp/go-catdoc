@@ -1,4 +1,4 @@
-module github.com/semvis123/go-catdoc
+module github.com/Rjamessp/go-catdoc
 
 go 1.20
 
