@@ -130,13 +130,13 @@ func callWASMFunc(funcName string, fs fs.FS) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("could not get wasm module: %w", err)
 	}
+	defer mod.Close(ctx)
 	_, err = mod.ExportedFunction(funcName).Call(ctx)
 	if err != nil {
 		if exitError, ok := err.(*sys.ExitError); ok && exitError.ExitCode() != 0 {
 			return "", fmt.Errorf("%s %w", errBuf.String(), exitError)
 		}
 	}
-
 	outStr := outBuf.String()
 	errStr := errBuf.String()
 	outStr = strings.TrimRight(outStr, "\n")
